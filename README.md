@@ -138,7 +138,7 @@ PowerShell 中用 `$env:QT_QPA_PLATFORM='offscreen'` 等设置测试环境变量
 
 [CI 工作流](.github/workflows/ci.yml) 配置三平台核心测试、Qt 控件测试、高分屏检查、原生打包和程序窗口冒烟检查。Linux 使用 Ubuntu 22.04 构建并通过 Xvfb 运行实际 X11 窗口。工作流只上传产物，不自动发布 Release。
 
-本机 Linux 构建使用 glibc 2.43，仅在当前系统验收；更早发行版请使用源码或相应基线构建。Windows/macOS 原生验收、代码签名和 macOS 公证需在对应环境执行；本地配置 CI 不代表已运行远程 CI。
+本机 Linux 构建使用 glibc 2.43，仅在当前系统验收；更早发行版请使用源码或相应基线构建。三平台远程 CI 已完整通过（测试、高分屏、打包与窗口冒烟，见 [0.5 验证记录](docs/verification-0.5.md)）；代码签名和 macOS 公证仍需在对应环境执行。
 
 ## 实现
 

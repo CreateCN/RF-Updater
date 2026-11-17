@@ -28,6 +28,12 @@ All notable changes to RF-Updater are documented here. The format follows
 - 全部用户可见文本（GUI、引擎错误、通知、目录页、托盘、CLI）经 `i18n.t()` 输出；引擎与 CLI 保持零 Qt 依赖。
 - 测试套件钉住简体中文，既有断言不受 CI 机器区域影响。
 
+### Fixed
+- First full three-platform remote CI passed (run 44088390829). Issues found and fixed along the way: Windows lock-probe read raised a raw `PermissionError` (now a proper contention error); Windows offscreen font database enumerated no system fonts, causing full-width Latin rendering (now registers known system font files, forces the family via QSS, and uses a logical-pixel font base); long checkbox/button labels shortened and title labels made wrappable so layouts no longer depend on specific font metrics; tests normalized temp paths (`/private/var`, 8.3 short names), used real process images for fake sessions, and explicit UTF-8 decoding; Linux xcb dependency set completed.
+
+### 修复
+- 首次三平台远程 CI 完整通过（运行 44088390829）。期间发现并修复：Windows 锁探测读取抛裸 `PermissionError`（现统一为竞争错误）；Windows offscreen 字体数据库不枚举系统字体导致拉丁字符全角渲染（现注册已知系统字体文件、QSS 强制字体族、逻辑像素字体基准）；长复选框/按钮文案精简、标题标签可换行，布局不再依赖特定字体度量；测试统一临时路径解析（`/private/var`、8.3 短名）、伪造会话使用真实进程镜像、显式 UTF-8 解码；Linux 补齐 xcb 依赖。
+
 ## [0.4.0] - 2026-11-17
 
 ### Added

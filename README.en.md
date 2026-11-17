@@ -138,7 +138,7 @@ Builds use PyInstaller 6.22.3, certifi 2026.10.23 and the pinned PySide6. `dist/
 
 The [CI workflow](.github/workflows/ci.yml) runs core tests, Qt control tests, hi-DPI checks, native packaging and window smoke tests on three platforms. Linux builds on Ubuntu 22.04 and runs real X11 windows through Xvfb. The workflow only uploads artifacts; it does not publish releases.
 
-The local Linux build uses glibc 2.43 and is only accepted on the current system; for older distributions use the source or a matching baseline build. Windows/macOS native acceptance, code signing and macOS notarization must run in their respective environments; configuring CI locally does not mean remote CI has run.
+The local Linux build uses glibc 2.43 and is only accepted on the current system; for older distributions use the source or a matching baseline build. Remote CI has fully passed on all three platforms (tests, hi-DPI, packaging and window smoke; see the [0.5 verification record](docs/verification-0.5.md), Chinese). Code signing and macOS notarization still require their respective environments.
 
 ## Implementation
 
