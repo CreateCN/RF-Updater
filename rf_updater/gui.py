@@ -292,7 +292,7 @@ class App(QMainWindow):
         self.task_panel.retry.clicked.connect(self.retry_task)
         self.task_panel.log_button.clicked.connect(self.open_log)
         box.addWidget(self.task_panel)
-        box.addWidget(self._tlabel("gui.credit", "caption"))
+        box.addWidget(self._tlabel("gui.credit", "caption", wrap=True))
         row.addWidget(main, 1)
         self.show_page("home")
 
@@ -337,7 +337,7 @@ class App(QMainWindow):
         grid.setSpacing(18)
         local = QVBoxLayout()
         local.setSpacing(7)
-        local_heading = self._tlabel("gui.local_build", "caption")
+        local_heading = self._tlabel("gui.local_build", "caption", wrap=True)
         local_heading.setFixedHeight(38)
         local.addWidget(local_heading)
         self.local_label = label(t("gui.not_installed"), wrap=True)

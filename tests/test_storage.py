@@ -9,7 +9,7 @@ from pathlib import Path
 from unittest.mock import patch
 
 from rf_updater import preferences, storage
-from rf_updater.engine import Engine, exclusive
+from rf_updater.engine import Engine, exclusive, _process_image
 from rf_updater.models import Cancelled, Release, UpdaterError, atomic_json
 
 
@@ -17,7 +17,7 @@ class StorageTests(unittest.TestCase):
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory(prefix='rf-storage-test-')
         self.addCleanup(self.temp.cleanup)
-        self.base = Path(self.temp.name)
+        self.base = Path(self.temp.name).resolve()
         self.root = self.base/'data'
         self.root.mkdir()
         self.config = self.base/'settings/directories.json'
@@ -96,7 +96,7 @@ class StorageTests(unittest.TestCase):
 
     def test_old_cleanup_refused_while_game_running(self):
         atomic_json(self.root/'game-session.json', {
-            'pid': os.getpid(), 'executable': str(Path(sys.executable).resolve()),
+            'pid': os.getpid(), 'executable': _process_image(os.getpid()) or str(Path(sys.executable).resolve()),
             'command': [sys.executable], 'generation': self.active['generation']})
         old_key = 'installs/' + self.old['generation']
         with self.assertRaisesRegex(UpdaterError, '运行'):

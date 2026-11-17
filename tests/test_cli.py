@@ -16,8 +16,8 @@ class CliLanguageTests(unittest.TestCase):
     def run_cli(self, *args, env=None):
         environment = {**os.environ, **(env or {})}
         return subprocess.run([sys.executable, "-m", "rf_updater", "--root", str(self.root), *args],
-                              capture_output=True, text=True, timeout=60,
-                              env={**environment, "PYTHONIOENCODING": "utf-8"})
+                              capture_output=True, text=True, encoding="utf-8", timeout=60,
+                              env={**environment, "PYTHONIOENCODING": "utf-8", "PYTHONUTF8": "1"})
 
     def test_explicit_override_wins(self):
         result = self.run_cli("verify", env={"RF_UPDATER_LANG": "en", "LC_ALL": "zh_CN.UTF-8"})

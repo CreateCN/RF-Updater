@@ -11,7 +11,7 @@ import unittest
 from pathlib import Path
 from unittest.mock import patch
 
-from rf_updater.engine import Engine, exclusive
+from rf_updater.engine import Engine, exclusive, _process_image
 from rf_updater.models import Cancelled, UpdaterError, atomic_json
 from tests.support import Server, linux_package, zip_package
 
@@ -229,7 +229,7 @@ class EngineTests(unittest.TestCase):
             engine = Engine(self.root, "linux", server.network)
             installation = engine.install(server.release(), self.cancel)
             atomic_json(self.root / "game-session.json", {
-                "pid": os.getpid(), "executable": str(Path(sys.executable).resolve()),
+                "pid": os.getpid(), "executable": _process_image(os.getpid()) or str(Path(sys.executable).resolve()),
                 "command": [sys.executable], "generation": installation["generation"]})
             self.assertIsNotNone(engine.game_running())
 
@@ -247,7 +247,7 @@ class EngineTests(unittest.TestCase):
                 engine.install(server.release(), self.cancel)
             self.assertEqual(len(calls), 2)
             self.assertEqual(engine.verify(self.cancel), 2)
-            self.assertIn("download_retry", (self.root / "logs/updater.log").read_text())
+            self.assertIn("download_retry", (self.root / "logs/updater.log").read_text(encoding="utf-8"))
 
     def test_retry_budget_exhausted_preserves_active_install(self):
         with Server() as server:
@@ -259,7 +259,7 @@ class EngineTests(unittest.TestCase):
                 with self.assertRaises(UpdaterError):
                     engine.install(server.release(), self.cancel)
             self.assertEqual(engine.state()["active"], first)
-            self.assertIn("install_failed", (self.root / "logs/updater.log").read_text())
+            self.assertIn("install_failed", (self.root / "logs/updater.log").read_text(encoding="utf-8"))
 
 
 if __name__ == "__main__":

@@ -81,12 +81,12 @@ def exclusive(root: Path):
     """OS locks are released on process death; never delete the lock file."""
     root.mkdir(parents=True, exist_ok=True)
     with (root / ".updater.lock").open("a+b") as stream:
-        stream.seek(0)
-        if stream.read(1) == b"":
-            stream.write(b"0")
-            stream.flush()
-        stream.seek(0)
         try:
+            stream.seek(0)
+            if stream.read(1) == b"":
+                stream.write(b"0")
+                stream.flush()
+            stream.seek(0)
             if sys.platform == "win32":
                 import msvcrt
                 msvcrt.locking(stream.fileno(), msvcrt.LK_NBLCK, 1)
@@ -94,6 +94,8 @@ def exclusive(root: Path):
                 import fcntl
                 fcntl.flock(stream.fileno(), fcntl.LOCK_EX | fcntl.LOCK_NB)
         except OSError as exc:
+            # Windows raises PermissionError even on the probe read while another
+            # process holds the byte lock; that is contention, not a disk fault.
             raise UpdaterError(t("engine.locked")) from exc
         try:
             yield

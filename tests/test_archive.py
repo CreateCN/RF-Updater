@@ -2,6 +2,7 @@ import io
 import gzip
 import os
 import stat
+import sys
 import tarfile
 import tempfile
 import threading
@@ -34,7 +35,8 @@ class ArchiveTests(unittest.TestCase):
         self.assertEqual(len(records), 2)
         path = find_executable(self.destination, "linux")
         self.assertEqual(path, "RocketFoundry/RocketFoundry")
-        self.assertTrue((self.destination / path).stat().st_mode & stat.S_IXUSR)
+        if sys.platform != "win32":
+            self.assertTrue((self.destination / path).stat().st_mode & stat.S_IXUSR)
 
     def test_windows_zip_discovers_game(self):
         self.extract(zip_package(), "windows")
@@ -43,7 +45,8 @@ class ArchiveTests(unittest.TestCase):
     def test_mac_bundle_discovers_game(self):
         self.extract(zip_package("macos"), "macos")
         self.assertEqual(find_executable(self.destination, "macos"), "Rocket Foundry.app")
-        self.assertTrue((self.destination / "Rocket Foundry.app/Contents/MacOS/RocketFoundry").stat().st_mode & 0o111)
+        if sys.platform != "win32":
+            self.assertTrue((self.destination / "Rocket Foundry.app/Contents/MacOS/RocketFoundry").stat().st_mode & 0o111)
 
     def test_rejects_absolute_traversal_windows_devices_and_ads(self):
         for name in ("../escape", "/etc/passwd", "C:/escape", "x\\..\\escape", "ok/../../escape", "file:stream", "NUL.txt", "folder/trailing."):

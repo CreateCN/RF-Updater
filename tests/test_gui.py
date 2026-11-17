@@ -18,7 +18,7 @@ try:
 except ImportError as exc:
     raise unittest.SkipTest("Install the declared PySide6 dependency for desktop tests") from exc
 
-from rf_updater.engine import Engine
+from rf_updater.engine import Engine, _process_image
 from rf_updater.gui import App
 from rf_updater.network import CHUNK
 from rf_updater.ui.theme import apply_theme
@@ -405,7 +405,7 @@ class GuiTests(unittest.TestCase):
         before = self.engine.state_path.read_bytes()
         other = tempfile.TemporaryDirectory(prefix='rf-directory-choice-')
         self.addCleanup(other.cleanup)
-        destination = Path(other.name)
+        destination = Path(other.name).resolve()
         (destination / 'unrelated.txt').write_text('keep')
         window, c = self.open_window()
         self.click(window.nav['directories'])
@@ -443,7 +443,7 @@ class GuiTests(unittest.TestCase):
         import shutil
         other = tempfile.TemporaryDirectory(prefix='rf-external-choice-')
         self.addCleanup(other.cleanup)
-        destination = Path(other.name)
+        destination = Path(other.name).resolve()
         self.engine = storage.switch_directory(self.engine, destination)
         shutil.rmtree(destination)
         window, c = self.open_window()
@@ -454,7 +454,7 @@ class GuiTests(unittest.TestCase):
         page = window.directory_page
         replacement_temp = tempfile.TemporaryDirectory(prefix='rf-replacement-choice-')
         self.addCleanup(replacement_temp.cleanup)
-        replacement = Path(replacement_temp.name)
+        replacement = Path(replacement_temp.name).resolve()
         with patch('rf_updater.ui.directories.QFileDialog.getExistingDirectory', return_value=str(replacement)), patch.object(page, 'confirm_switch', return_value=True):
             self.click(page.choose_button)
             self.idle()
@@ -522,7 +522,7 @@ class GuiTests(unittest.TestCase):
             self.server.data = linux_package(f'#!/bin/sh\necho {index}\n'.encode())
             self.install_first()
         atomic_json(self.engine.root / 'game-session.json', {
-            'pid': os.getpid(), 'executable': str(Path(sys.executable).resolve()),
+            'pid': os.getpid(), 'executable': _process_image(os.getpid()) or str(Path(sys.executable).resolve()),
             'command': [sys.executable], 'generation': self.engine.state()['active']['generation']})
         window, c = self.open_window()
         self.assertTrue(c.game_running)
@@ -673,6 +673,7 @@ class GuiTests(unittest.TestCase):
 
     def test_english_layout_at_minimum_size(self):
         from rf_updater import preferences
+        from PySide6.QtWidgets import QWidget
         preferences.save_settings({"language": "en"})
         window, c = self.open_window()
         window.resize(900, 640)
@@ -680,7 +681,12 @@ class GuiTests(unittest.TestCase):
         for name in ("home", "manage", "directories", "about"):
             self.click(window.nav[name])
             QTest.qWait(50)
-            self.assertEqual(window.pages[name].horizontalScrollBar().maximum(), 0, name)
+            maximum = window.pages[name].horizontalScrollBar().maximum()
+            if maximum:
+                wide = [(child.minimumSizeHint().width(), child.metaObject().className(), child.objectName())
+                        for child in window.pages[name].widget().findChildren(QWidget)
+                        if child.isVisible() and child.minimumSizeHint().width() > 250]
+                self.fail(f"{name}: horizontal overflow {maximum}px; wide children: {wide}")
         self.capture("english-small")
 
 
