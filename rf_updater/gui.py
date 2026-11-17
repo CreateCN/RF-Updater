@@ -434,8 +434,8 @@ class App(QMainWindow):
 
     def _about(self, box):
         about = Panel()
-        about.box.addWidget(self._tlabel("gui.about_heading", "heading"))
-        about.box.addWidget(self._tlabel("gui.about_version", "muted", version=__version__))
+        about.box.addWidget(self._tlabel("gui.about_heading", "heading", wrap=True))
+        about.box.addWidget(self._tlabel("gui.about_version", "muted", wrap=True, version=__version__))
         about.box.addWidget(self._tlabel("gui.about_desc", wrap=True))
         site = self._tbutton("gui.about_website", "about_website")
         site.clicked.connect(lambda: self.open_destination("https://rocketfoundry.net/play/"))
@@ -471,6 +471,8 @@ class App(QMainWindow):
         self.language_combo = QComboBox()
         self.language_combo.setObjectName("language_choice")
         self.language_combo.setAccessibleName(t("gui.language_title"))
+        self.language_combo.setSizeAdjustPolicy(QComboBox.SizeAdjustPolicy.AdjustToMinimumContentsLengthWithIcon)
+        self.language_combo.setMinimumContentsLength(12)
         self._fill_language_combo()
         self.language_combo.currentIndexChanged.connect(self._language_changed)
         language.box.addWidget(self.language_combo)
