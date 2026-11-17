@@ -1,4 +1,7 @@
 """Shared design tokens for the launcher and its standard Qt dialogs."""
+import sys
+from pathlib import Path
+
 from PySide6.QtGui import QColor, QFont, QFontDatabase, QPalette
 from PySide6.QtWidgets import QApplication
 
@@ -15,6 +18,35 @@ WARNING = "#E4B26B"
 ERROR = "#F0A7A7"
 
 
+def _resolve_family(families: set, candidates: tuple, language: str) -> str | None:
+    for name in candidates:
+        if name in families:
+            return name
+    # Some environments (notably the Windows offscreen CI platform) do not
+    # enumerate system fonts at all; the generic fallback then renders Latin
+    # full-width. Register a known face directly to keep metrics sane.
+    if sys.platform == "win32":
+        paths = {"zh-CN": ["C:/Windows/Fonts/msyh.ttc", "C:/Windows/Fonts/simsun.ttc"],
+                 "zh-TW": ["C:/Windows/Fonts/msjh.ttc", "C:/Windows/Fonts/mingliu.ttc"],
+                 "en": ["C:/Windows/Fonts/segoeui.ttf", "C:/Windows/Fonts/arial.ttf"]}[language]
+    elif sys.platform == "darwin":
+        paths = {"zh-CN": ["/System/Library/Fonts/PingFang.ttc"],
+                 "zh-TW": ["/System/Library/Fonts/PingFang.ttc"],
+                 "en": ["/System/Library/Fonts/Helvetica.ttc", "/System/Library/Fonts/Supplemental/Arial.ttf"]}[language]
+    else:
+        paths = ["/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
+                 "/usr/share/fonts/dejavu-sans-fonts/DejaVuSans.ttf",
+                 "/usr/share/fonts/truetype/noto/NotoSansCJK-Regular.ttc"]
+    for path in paths:
+        if Path(path).is_file():
+            font_id = QFontDatabase.addApplicationFont(path)
+            if font_id >= 0:
+                loaded = QFontDatabase.applicationFontFamilies(font_id)
+                if loaded:
+                    return loaded[0]
+    return None
+
+
 def apply_theme(app: QApplication) -> None:
     app.setStyle("Fusion")
     families = set(QFontDatabase.families())
@@ -26,7 +58,7 @@ def apply_theme(app: QApplication) -> None:
     else:
         # Proportional Latin faces; a CJK fallback would render Latin full-width.
         candidates = ("Segoe UI", "Helvetica Neue", "Arial", "Noto Sans")
-    family = next((name for name in candidates if name in families), app.font().family())
+    family = _resolve_family(families, candidates, language) or app.font().family()
     font = QFont(family)
     # Logical pixels, matching the px-based stylesheet; point sizes would be
     # re-scaled by the platform DPI and drift from the QSS metrics.
