@@ -1,0 +1,53 @@
+{
+  "windows": {
+    "metadata": {
+      "platform": "windows",
+      "url": "https://api.rocketfoundry.net/download/windows",
+      "size": 573569754,
+      "etag": "\"bed5213b24ee1561473b1e2f77643c94-69\"",
+      "modified": "Sun, 15 Nov 2026 21:57:17 GMT",
+      "sha256": null
+    },
+    "range_status": 206,
+    "entries": 228,
+    "unpacked_bytes": 1143470390,
+    "executables": [
+      "RocketFoundry.exe",
+      "data_RocketFoundry_windows_x86_64/createdump.exe"
+    ],
+    "internal_symlinks": 0
+  },
+  "macos": {
+    "metadata": {
+      "platform": "macos",
+      "url": "https://api.rocketfoundry.net/download/macos",
+      "size": 565222158,
+      "etag": "\"3df523a1d2e7674a7efc8ed972501660-68\"",
+      "modified": "Sun, 15 Nov 2026 21:57:56 GMT",
+      "sha256": null
+    },
+    "range_status": 206,
+    "entries": 230,
+    "unpacked_bytes": 1130925332,
+    "executables": [
+      "Rocket Foundry.app/Contents/MacOS/",
+      "Rocket Foundry.app/Contents/MacOS/Rocket Foundry"
+    ],
+    "internal_symlinks": 0
+  },
+  "checked_date": "2026-11-16",
+  "linux": {
+    "metadata": {
+      "platform": "linux",
+      "url": "https://api.rocketfoundry.net/download/linux",
+      "size": 563974010,
+      "etag": "\"88bbe4729a4ad86249acf796f61a81bc-68\"",
+      "modified": "Sun, 15 Nov 2026 21:57:31 GMT",
+      "sha256": null
+    },
+    "full_install_verified": true,
+    "files": 226,
+    "package_sha256_local": "bb6934a46abd01102f97b75c8c228c4936af71e7be73f2237cd1b421c503d94a",
+    "executable": "RocketFoundry-Linux-x86_64/RocketFoundry.x86_64"
+  }
+}

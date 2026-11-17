@@ -1,0 +1,13 @@
+test_cancel_download_page_switch_and_real_range_resume (tests.test_gui.GuiTests.test_cancel_download_page_switch_and_real_range_resume) ... ok
+test_check_does_not_block_launch_and_offline_launch_remains_available (tests.test_gui.GuiTests.test_check_does_not_block_launch_and_offline_launch_remains_available) ... ok
+test_close_cancels_install_without_damaging_existing_data (tests.test_gui.GuiTests.test_close_cancels_install_without_damaging_existing_data) ... ok
+test_close_waits_for_check_thread (tests.test_gui.GuiTests.test_close_waits_for_check_thread) ... ok
+test_complete_desktop_flow_and_layout (tests.test_gui.GuiTests.test_complete_desktop_flow_and_layout) ... ok
+test_confirmations_can_cancel_without_creating_tasks (tests.test_gui.GuiTests.test_confirmations_can_cancel_without_creating_tasks) ... ok
+test_failed_update_preserves_install_and_retry_recovers (tests.test_gui.GuiTests.test_failed_update_preserves_install_and_retry_recovers) ... ok
+test_old_results_cannot_replace_new_check_and_text_is_plain (tests.test_gui.GuiTests.test_old_results_cannot_replace_new_check_and_text_is_plain) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 18.301s
+
+OK

@@ -1,0 +1,94 @@
+name: Test and build desktop updater
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  desktop:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-22.04
+            target: linux-x64
+          - os: windows-2022
+            target: windows-x64
+          - os: macos-15
+            target: macos-arm64
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Linux Qt desktop dependencies
+        if: runner.os == 'Linux'
+        run: sudo apt-get update && sudo apt-get install -y libxcb-cursor0 libxkbcommon-x11-0 libegl1 libopengl0 libgl1 libxcb-icccm4 libxcb-image0 libxcb-keysyms1 libxcb-render-util0 fonts-noto-cjk
+      - name: Install runtime and build dependencies
+        run: python -m pip install -e . -r requirements-build.txt
+      - name: Unit and local HTTP integration tests
+        env:
+          QT_QPA_PLATFORM: offscreen
+        run: python -m unittest discover -v
+      - name: Linux desktop interaction checks
+        if: runner.os == 'Linux'
+        env:
+          QT_QPA_PLATFORM: xcb
+        run: xvfb-run -a python -m scripts.qa_gui --screenshots build/qa-native
+      - name: Desktop checks at 150 percent
+        env:
+          QT_QPA_PLATFORM: offscreen
+          QT_SCALE_FACTOR: '1.5'
+        run: python -m scripts.qa_gui --screenshots build/qa-scale-150
+      - name: Desktop checks at 200 percent
+        env:
+          QT_QPA_PLATFORM: offscreen
+          QT_SCALE_FACTOR: '2'
+        run: python -m scripts.qa_gui --screenshots build/qa-scale-200
+      - name: Build native bundle
+        run: python -m scripts.build
+      - name: Smoke-test Linux bundle
+        if: runner.os == 'Linux'
+        run: dist/RF-Updater/RF-Updater --root build/smoke-data status
+      - name: Smoke-test Windows bundle
+        if: runner.os == 'Windows'
+        run: |
+          $process = Start-Process -FilePath dist/RF-Updater/RF-Updater.exe -ArgumentList '--root', 'build/smoke-data', 'status' -Wait -PassThru
+          if ($process.ExitCode -ne 0) { exit $process.ExitCode }
+      - name: Smoke-test macOS bundle
+        if: runner.os == 'macOS'
+        run: dist/RF-Updater.app/Contents/MacOS/RF-Updater --root build/smoke-data status
+      - name: Open Linux bundle window
+        if: runner.os == 'Linux'
+        env:
+          QT_QPA_PLATFORM: xcb
+        run: xvfb-run -a python -m scripts.smoke_native dist/RF-Updater/RF-Updater
+      - name: Open Windows bundle window
+        if: runner.os == 'Windows'
+        env:
+          QT_QPA_PLATFORM: offscreen
+        run: python -m scripts.smoke_native dist/RF-Updater/RF-Updater.exe
+      - name: Open macOS bundle window
+        if: runner.os == 'macOS'
+        env:
+          QT_QPA_PLATFORM: offscreen
+        run: python -m scripts.smoke_native dist/RF-Updater.app/Contents/MacOS/RF-Updater
+      - uses: actions/upload-artifact@v4
+        with:
+          name: RF-Updater-${{ matrix.target }}
+          path: |
+            dist/RF-Updater-${{ matrix.target }}.zip
+            dist/RF-Updater-${{ matrix.target }}.tar.gz
+            dist/*.sha256
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: UI-QA-${{ matrix.target }}
+          path: build/qa-*
+          if-no-files-found: ignore

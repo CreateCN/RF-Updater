@@ -1,0 +1,1 @@
+Native window remained running, PID 156507. Test will now close its own process.

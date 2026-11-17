@@ -1,0 +1,7 @@
+{
+  "version": "6.12.0",
+  "source_url": "https://download.qt.io/official_releases/qt/6.12/6.12.0/submodules/qtbase-everywhere-src-6.12.0.tar.xz",
+  "source_sha256": "a951bd163c7b80fc6b8c88d7668fb56abf91c152373e13c10666763238131307",
+  "files": 60,
+  "note": "License texts and attribution manifests, extracted unchanged. This is a superset of QtBase notices, not an assertion that every listed component is shipped."
+}

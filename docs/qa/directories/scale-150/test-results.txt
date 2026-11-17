@@ -1,0 +1,19 @@
+test_cancel_download_page_switch_and_real_range_resume (tests.test_gui.GuiTests.test_cancel_download_page_switch_and_real_range_resume) ... ok
+test_check_does_not_block_launch_and_offline_launch_remains_available (tests.test_gui.GuiTests.test_check_does_not_block_launch_and_offline_launch_remains_available) ... ok
+test_close_cancels_install_without_damaging_existing_data (tests.test_gui.GuiTests.test_close_cancels_install_without_damaging_existing_data) ... ok
+test_close_waits_for_check_thread (tests.test_gui.GuiTests.test_close_waits_for_check_thread) ... ok
+test_complete_desktop_flow_and_layout (tests.test_gui.GuiTests.test_complete_desktop_flow_and_layout) ... ok
+test_confirmations_can_cancel_without_creating_tasks (tests.test_gui.GuiTests.test_confirmations_can_cancel_without_creating_tasks) ... ok
+test_directory_picker_switch_persistence_and_return (tests.test_gui.GuiTests.test_directory_picker_switch_persistence_and_return) ... ok
+test_directory_scan_can_cancel_and_disables_directory_changes (tests.test_gui.GuiTests.test_directory_scan_can_cancel_and_disables_directory_changes) ... ok
+test_failed_update_preserves_install_and_retry_recovers (tests.test_gui.GuiTests.test_failed_update_preserves_install_and_retry_recovers) ... ok
+test_old_install_cleanup_dialog_requires_backup_checkbox (tests.test_gui.GuiTests.test_old_install_cleanup_dialog_requires_backup_checkbox) ... This plugin does not support propagateSizeHints()
+ok
+test_old_results_cannot_replace_new_check_and_text_is_plain (tests.test_gui.GuiTests.test_old_results_cannot_replace_new_check_and_text_is_plain) ... ok
+test_unavailable_saved_directory_can_be_replaced_visually (tests.test_gui.GuiTests.test_unavailable_saved_directory_can_be_replaced_visually) ... ok
+test_visual_storage_inventory_and_selected_cleanup (tests.test_gui.GuiTests.test_visual_storage_inventory_and_selected_cleanup) ... ok
+
+----------------------------------------------------------------------
+Ran 13 tests in 29.712s
+
+OK

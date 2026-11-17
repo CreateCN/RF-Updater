@@ -1,0 +1,8 @@
+{
+  "version": "0.3.0",
+  "binary": "/home/sunhao/.local/opt/rf-updater/0.3.0-a1b2d7b1/RF-Updater",
+  "launcher": "/home/sunhao/.local/bin/rf-updater",
+  "desktop_entry": "/home/sunhao/.local/share/applications/rf-updater-community.desktop",
+  "pid": 157084,
+  "log": "/home/sunhao/.local/state/rf-updater/launcher.log"
+}

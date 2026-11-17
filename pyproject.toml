@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "rf-updater"
+version = "0.5.0"
+description = "An independent desktop updater for Rocket Foundry"
+requires-python = ">=3.11"
+license = "MIT"
+dependencies = ["PySide6==6.12.0"]
+
+[project.scripts]
+rf-updater = "rf_updater.__main__:main"
+
+[tool.setuptools.packages.find]
+include = ["rf_updater*"]
+
+[tool.setuptools.package-data]
+rf_updater = ["locales/*.json"]

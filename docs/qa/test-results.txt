@@ -1,0 +1,56 @@
+test_cancellation_stops_extraction (tests.test_archive.ArchiveTests.test_cancellation_stops_extraction) ... ok
+test_case_collisions_rejected_on_windows (tests.test_archive.ArchiveTests.test_case_collisions_rejected_on_windows) ... ok
+test_corrupt_gzip_trailer_is_rejected_before_writing (tests.test_archive.ArchiveTests.test_corrupt_gzip_trailer_is_rejected_before_writing) ... ok
+test_device_file_rejected (tests.test_archive.ArchiveTests.test_device_file_rejected) ... ok
+test_escaping_symlink_rejected (tests.test_archive.ArchiveTests.test_escaping_symlink_rejected) ... ok
+test_extraction_budget_rejected_before_writing (tests.test_archive.ArchiveTests.test_extraction_budget_rejected_before_writing) ... ok
+test_hardlink_preserves_content_without_copying (tests.test_archive.ArchiveTests.test_hardlink_preserves_content_without_copying) ... ok
+test_invalid_archive_is_actionable (tests.test_archive.ArchiveTests.test_invalid_archive_is_actionable) ... ok
+test_mac_bundle_discovers_game (tests.test_archive.ArchiveTests.test_mac_bundle_discovers_game) ... ok
+test_macos_zip_internal_symlink_is_preserved (tests.test_archive.ArchiveTests.test_macos_zip_internal_symlink_is_preserved) ... ok
+test_no_writes_through_symlink_parents (tests.test_archive.ArchiveTests.test_no_writes_through_symlink_parents) ... ok
+test_rejects_absolute_traversal_windows_devices_and_ads (tests.test_archive.ArchiveTests.test_rejects_absolute_traversal_windows_devices_and_ads) ... ok
+test_safe_internal_symlink_is_preserved (tests.test_archive.ArchiveTests.test_safe_internal_symlink_is_preserved) ... ok
+test_tar_budget_checked_before_seeking_over_declared_file (tests.test_archive.ArchiveTests.test_tar_budget_checked_before_seeking_over_declared_file) ... ok
+test_tar_extracts_and_records_hashes_and_executable (tests.test_archive.ArchiveTests.test_tar_extracts_and_records_hashes_and_executable) ... ok
+test_tar_path_traversal_is_rejected_before_writing (tests.test_archive.ArchiveTests.test_tar_path_traversal_is_rejected_before_writing) ... ok
+test_windows_zip_discovers_game (tests.test_archive.ArchiveTests.test_windows_zip_discovers_game) ... ok
+test_zip_path_traversal_is_rejected (tests.test_archive.ArchiveTests.test_zip_path_traversal_is_rejected) ... ok
+test_cancelled_update_preserves_current (tests.test_engine.EngineTests.test_cancelled_update_preserves_current) ... ok
+test_check_compares_official_build_identifiers (tests.test_engine.EngineTests.test_check_compares_official_build_identifiers) ... ok
+test_corrupt_update_preserves_active_install (tests.test_engine.EngineTests.test_corrupt_update_preserves_active_install) ... ok
+test_does_not_delete_old_generations_or_game_created_data (tests.test_engine.EngineTests.test_does_not_delete_old_generations_or_game_created_data) ... ok
+test_failed_activation_preserves_previous_pointer (tests.test_engine.EngineTests.test_failed_activation_preserves_previous_pointer) ... ok
+test_full_install_update_verify_rollback (tests.test_engine.EngineTests.test_full_install_update_verify_rollback) ... ok
+test_interrupted_commit_does_not_remove_the_active_generation (tests.test_engine.EngineTests.test_interrupted_commit_does_not_remove_the_active_generation) ... ok
+test_launch_real_fixture_game_and_log (tests.test_engine.EngineTests.test_launch_real_fixture_game_and_log) ... ok
+test_mac_and_windows_install_archives (tests.test_engine.EngineTests.test_mac_and_windows_install_archives) ... ok
+test_mismatched_platform_is_rejected (tests.test_engine.EngineTests.test_mismatched_platform_is_rejected) ... ok
+test_simultaneous_process_is_locked_out (tests.test_engine.EngineTests.test_simultaneous_process_is_locked_out) ... ok
+test_tamper_and_missing_file_detected (tests.test_engine.EngineTests.test_tamper_and_missing_file_detected) ... ok
+test_unknown_identity_does_not_claim_current (tests.test_engine.EngineTests.test_unknown_identity_does_not_claim_current) ... ok
+test_untrusted_state_cannot_escape_install_directory (tests.test_engine.EngineTests.test_untrusted_state_cannot_escape_install_directory) ... ok
+test_cancel_and_resume (tests.test_network.NetworkTests.test_cancel_and_resume) ... ok
+test_changed_build_rejected_and_partial_discarded (tests.test_network.NetworkTests.test_changed_build_rejected_and_partial_discarded) ... ok
+test_checksum_mismatch_discards_package (tests.test_network.NetworkTests.test_checksum_mismatch_discards_package) ... ok
+test_digest_headers (tests.test_network.NetworkTests.test_digest_headers) ... ok
+test_frozen_bundle_requires_its_ca_file (tests.test_network.NetworkTests.test_frozen_bundle_requires_its_ca_file) ... ok
+test_head_unsupported_uses_one_byte_range (tests.test_network.NetworkTests.test_head_unsupported_uses_one_byte_range) ... ok
+test_https_downgrade_redirect_rejected (tests.test_network.NetworkTests.test_https_downgrade_redirect_rejected) ... ok
+test_if_match_prevents_new_build_download (tests.test_network.NetworkTests.test_if_match_prevents_new_build_download) ... ok
+test_ignored_range_restarts_instead_of_appending (tests.test_network.NetworkTests.test_ignored_range_restarts_instead_of_appending) ... ok
+test_invalid_range_never_appends (tests.test_network.NetworkTests.test_invalid_range_never_appends) ... ok
+test_no_validators_does_not_resume_and_is_not_comparable (tests.test_network.NetworkTests.test_no_validators_does_not_resume_and_is_not_comparable) ... ok
+test_plain_http_is_rejected_by_default (tests.test_network.NetworkTests.test_plain_http_is_rejected_by_default) ... ok
+test_redirect_probe_and_download_with_publisher_checksum (tests.test_network.NetworkTests.test_redirect_probe_and_download_with_publisher_checksum) ... ok
+test_resume_uses_range_and_if_range (tests.test_network.NetworkTests.test_resume_uses_range_and_if_range) ... ok
+test_tls_keeps_hostname_and_certificate_verification_enabled (tests.test_network.NetworkTests.test_tls_keeps_hostname_and_certificate_verification_enabled) ... ok
+test_truncated_body_keeps_partial_and_can_resume (tests.test_network.NetworkTests.test_truncated_body_keeps_partial_and_can_resume) ... ok
+test_frozen_linux_removes_injected_libraries_if_no_original (tests.test_runtime.RuntimeTests.test_frozen_linux_removes_injected_libraries_if_no_original) ... ok
+test_frozen_linux_restores_original_libraries_without_mutating_parent (tests.test_runtime.RuntimeTests.test_frozen_linux_restores_original_libraries_without_mutating_parent) ... ok
+test_source_preserves_environment (tests.test_runtime.RuntimeTests.test_source_preserves_environment) ... ok
+
+----------------------------------------------------------------------
+Ran 51 tests in 12.457s
+
+OK
