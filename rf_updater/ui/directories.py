@@ -103,7 +103,7 @@ class DirectoryPage(QWidget):
         legend = QHBoxLayout()
         self.legend = {}
         for cat, key, color in CATEGORIES:
-            item = label(f"{t(key)} —", "caption")
+            item = label(f"{t(key)} —", "caption", wrap=True)
             item.setStyleSheet(f"color: {color};")
             legend.addWidget(item, 1)
             self.legend[cat] = item

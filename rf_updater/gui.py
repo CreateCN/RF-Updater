@@ -36,6 +36,9 @@ class App(QMainWindow):
         self.settings = load_settings()
         language = self.settings.get("language")
         i18n.use(language if language in i18n.available() else self._system_language())
+        # launch_gui applied the theme before the language was resolved; re-apply
+        # so fonts match the active language from the first frame.
+        theme.apply_theme(QApplication.instance())
         self._qt_translator = None
         self._install_qt_translator()
         self.controller = Controller(engine, self)
@@ -304,7 +307,7 @@ class App(QMainWindow):
         copy = QVBoxLayout()
         copy.setSpacing(10)
         copy.addStretch()
-        copy.addWidget(label("Rocket Foundry", "display"))
+        copy.addWidget(label("Rocket Foundry", "display", wrap=True))
         copy.addWidget(self._tlabel("gui.tagline", "muted", wrap=True))
         copy.addStretch()
         hero_row.addLayout(copy, 1)
@@ -313,7 +316,7 @@ class App(QMainWindow):
         box.addWidget(hero)
         launch = Panel(padding=20)
         title_row = QHBoxLayout()
-        self.install_title = label(t("gui.install_title"), "section")
+        self.install_title = label(t("gui.install_title"), "section", wrap=True)
         title_row.addWidget(self.install_title, 1)
         self.status_chip = label(t("gui.chip_none"), "chip")
         title_row.addWidget(self.status_chip)

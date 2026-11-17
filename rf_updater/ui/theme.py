@@ -24,7 +24,8 @@ def apply_theme(app: QApplication) -> None:
     elif language == "zh-CN":
         candidates = ("Microsoft YaHei UI", "PingFang SC", "Noto Sans CJK SC", "WenQuanYi Micro Hei")
     else:
-        candidates = ()
+        # Proportional Latin faces; a CJK fallback would render Latin full-width.
+        candidates = ("Segoe UI", "Helvetica Neue", "Arial", "Noto Sans")
     family = next((name for name in candidates if name in families), app.font().family())
     font = QFont(family)
     font.setPointSizeF(10.5)
