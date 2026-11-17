@@ -28,7 +28,9 @@ def apply_theme(app: QApplication) -> None:
         candidates = ("Segoe UI", "Helvetica Neue", "Arial", "Noto Sans")
     family = next((name for name in candidates if name in families), app.font().family())
     font = QFont(family)
-    font.setPointSizeF(10.5)
+    # Logical pixels, matching the px-based stylesheet; point sizes would be
+    # re-scaled by the platform DPI and drift from the QSS metrics.
+    font.setPixelSize(14)
     app.setFont(font)
     palette = QPalette()
     for role, value in (
@@ -43,7 +45,9 @@ def apply_theme(app: QApplication) -> None:
         palette.setColor(role, QColor(value))
     palette.setColor(QPalette.ColorGroup.Disabled, QPalette.ColorRole.ButtonText, QColor("#72869C"))
     app.setPalette(palette)
-    app.setStyleSheet(STYLE)
+    # Force the resolved family on every widget: app-font propagation alone has
+    # proven unreliable across platforms (Windows CI rendered a CJK fallback).
+    app.setStyleSheet(STYLE + f'\n* {{ font-family: "{family}"; }}')
 
 
 STYLE = f"""

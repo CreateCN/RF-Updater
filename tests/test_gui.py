@@ -686,7 +686,12 @@ class GuiTests(unittest.TestCase):
                 wide = [(child.minimumSizeHint().width(), child.metaObject().className(), child.objectName())
                         for child in window.pages[name].widget().findChildren(QWidget)
                         if child.isVisible() and child.minimumSizeHint().width() > 250]
-                self.fail(f"{name}: horizontal overflow {maximum}px; wide children: {wide}")
+                app_font = QApplication.font()
+                button_font = window.primary.font()
+                self.fail(f"{name}: horizontal overflow {maximum}px; wide children: {wide}; "
+                          f"app font={app_font.family()}/{app_font.pixelSize()}px, "
+                          f"button font={button_font.family()}/{button_font.pixelSize()}px, "
+                          f"dpr={window.devicePixelRatioF()}, dpi={QApplication.instance().primaryScreen().logicalDotsPerInch()}")
         self.capture("english-small")
 
 
