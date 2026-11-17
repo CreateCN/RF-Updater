@@ -1,5 +1,7 @@
 # 本地化说明（0.5）
 
+**中文** | [English](en/localization.md)
+
 ## 机制
 
 - 翻译核心是纯标准库模块 `rf_updater/i18n.py`，引擎与 CLI 不导入 Qt。

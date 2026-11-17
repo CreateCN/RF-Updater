@@ -1,5 +1,7 @@
 # Rocket Foundry 更新器 0.5
 
+**简体中文** | [English](README.en.md)
+
 独立社区维护的跨平台桌面启动器：检查官方构建、断点续传、安装、校验、启动与回退。提供 **PySide6/Qt 深色界面与可视化本地目录管理**，0.4 新增游戏运行感知、下载自动重试、托盘通知、定时检查与诊断日志，0.5 新增**简体中文 / 繁体中文 / English 三语言本地化**（按机器区域标识自动切换）。支持 Windows x64、Linux x64 和 Apple Silicon macOS（14 及以上）。游戏本体不包含在项目中。
 
 ![可视化本地目录管理](docs/qa/directories/directory-manager.png)
@@ -142,12 +144,22 @@ PowerShell 中用 `$env:QT_QPA_PLATFORM='offscreen'` 等设置测试环境变量
 
 Qt 界面将主题、控件与任务控制集中在 `rf_updater/ui/`。QObject worker 在线程中调用原有 Engine，主线程通过信号更新界面；检查任务与变更任务独立记录，关闭窗口等待线程安全结束。
 
-网络、受限解压、事务式安装和 CLI 继续共用标准库引擎。启动游戏或系统应用前恢复共享库路径，并仅清除指向打包目录的 Qt 插件路径，保留用户的外部配置。更多内容见 [设计说明](docs/design.md)。
-
-本项目代码采用 MIT 许可。Rocket Foundry 的游戏、商标和资源属于其权利人，本项目与官方无隶属关系。
+网络、受限解压、事务式安装和 CLI 继续共用标准库引擎。启动游戏或系统应用前恢复共享库路径，并仅清除指向打包目录的 Qt 插件路径，保留用户的外部配置。更多内容见 [架构总览](docs/architecture.md) 与历史 [设计说明](docs/design.md)。
 
 目录管理实现位于 `storage.py` 与 `preferences.py`，后台执行扫描、切换和清理；清理前持有目录锁并重新读取安装状态，整批选择先验证再逐项删除。扫描最多检查 250,000 个文件系统节点、展示 2,000 个项目，超过限制会停止，避免界面失去响应。
 
 0.4 的运行感知由 `engine.py` 的会话记录与进程探测实现（Linux `/proc`、Windows `QueryFullProcessImageNameW`、macOS `proc_pidpath`），GUI 每 2 秒轮询；下载重试在引擎内以可取消的退避等待实现；诊断日志位于 `logbook.py`，逐事件开关文件、不常驻句柄，且绝不重建失联的数据目录。
 
 0.5 的本地化由纯标准库 `i18n.py` + JSON 目录实现，引擎与 CLI 不依赖 Qt；GUI 静态文本经 `retranslate()` 重设，动态文本每帧经 `t()` 渲染，因此语言切换即时生效。Qt 标准对话框另由 `qtbase_*.qm` 翻译。
+
+## 文档
+
+- [文档索引](docs/README.md)（中英双语）
+- [变更日志](CHANGELOG.md)（中英双语）
+- 架构总览：[中文](docs/architecture.md) / [English](docs/en/architecture.md)
+- 测试与构建：[中文](docs/testing.md) / [English](docs/en/testing.md)
+- 本地化说明：[中文](docs/localization.md) / [English](docs/en/localization.md)
+
+## 许可
+
+本项目代码采用 MIT 许可。Rocket Foundry 的游戏、商标和资源属于其权利人，本项目与官方无隶属关系。
